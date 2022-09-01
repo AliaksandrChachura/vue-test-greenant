@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-  import { RouterLink, RouterView } from 'vue-router'
+  import { RouterView } from 'vue-router'
   import AuthenticationModal from '@/components/modal/AuthenticationModal.vue'
 </script>
 

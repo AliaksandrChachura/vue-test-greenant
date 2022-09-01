@@ -9,11 +9,11 @@ export const ROUTES = {
     },
     subCategories: {
         name: 'subCategories',
-        path: '/catalog/:catId',
+        path: ':catId',
     },
     goods: {
         name: 'goods',
-        path: '/catalog/:catId/:subcatId',
+        path: ':catId/:subcatId',
     },
   };
   

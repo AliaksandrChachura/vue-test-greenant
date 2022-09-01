@@ -111,7 +111,6 @@
         }
 
         input {
-            // outline: 1px solid #8C99AF;
             width: 16px;
             height: 16px;
             margin-left: 88%;

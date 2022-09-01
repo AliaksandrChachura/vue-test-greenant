@@ -10,18 +10,19 @@ const routes = [
   {
     path: ROUTES.categories.path,
     name: ROUTES.categories.name,
-    component: () => import(/* webpackChunkName: ROUTES.categories.name */ '@/views/Categories.vue')
+    component: () => import(/* webpackChunkName: ROUTES.categories.name */ '@/views/Categories.vue'),
+    children: [
+      {
+        path: ROUTES.subCategories.path,
+        name: ROUTES.subCategories.name,
+        component: () => import(/* webpackChunkName: ROUTES.subCategories.name */ '@/views/SubCategories.vue'),
+      },
+      {
+        path: ROUTES.goods.path,
+        name: ROUTES.goods.name,
+        component: () => import(/* webpackChunkName: ROUTES.goods.name */ '@/views/Equipments.vue')}
+    ]
   },
-  {
-    path: ROUTES.subCategories.path,
-    name: ROUTES.subCategories.name,
-    component: () => import(/* webpackChunkName: ROUTES.subCategories.name */ '@/views/SubCategories.vue')
-  },
-  {
-    path: ROUTES.goods.path,
-    name: ROUTES.goods.name,
-    component: () => import(/* webpackChunkName: ROUTES.goods.name */ '@/views/Equipments.vue')
-  }
 ]
 
 const router = createRouter({

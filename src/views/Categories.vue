@@ -33,27 +33,21 @@
             <category-header
                 :headerName="categoriesData.subCategoriesName"
             />
-            <div>
-                <category-item
-                    v-for="user in categoriesData.subCategories"
-                    :key="user.id"
-                    :itemName = 'user.title'
-                    :class="{ active : categoriesData.activeSubCategory == user.id }"
-                    @click="activateSubCategory(user.id)"
-                    @get-resources="getGoods(user.id)"
-                />
-            </div>
+            <router-view
+                :sub-categories="categoriesData.subCategories"
+                :active-sub-category="categoriesData.activeSubCategory"
+                @activate-sub-category="activateSubCategory"
+                @get-resources="getGoods"
+            />
         </div>
         <div class="categories__equipment">
             <category-header
                 :headerName="categoriesData.equipmentName"
             />
-            <div class="categories__equipment-cards" :is="categoriesData.goods">
-                <card
-                v-for="good in categoriesData.goods"
-                :key="good.id"
-                :card="good"
-            />
+            <div class="categories__equipment-cards">
+                <router-view
+                    :goods="categoriesData.goods"
+                />
             </div>
         </div>
     </div>
@@ -61,11 +55,13 @@
 
 <script setup>
     import { ref, onMounted, computed, reactive } from 'vue'
+    import { useRouter, RouterView } from 'vue-router'
     import { useCategoriesStore } from '@/stores/categories'
     import CategoryHeader from '@/components/CategoryHeader.vue'
     import CategoryItem from '@/components/CategoryItem.vue'
-    import categoryModal from '@/components/modal/CategoryModal.vue'
+    import CategoryModal from '@/components/modal/CategoryModal.vue'
     import Card from '@/components/Card.vue'
+    import SubCategory from '@/views/SubCategories.vue'
     import { uid } from 'uid';
     import {
         apiGetPosts,
@@ -129,10 +125,18 @@
     const activateCategory = (id) => {
         categoriesData.activeCategory = id
         categoriesData.activeSubCategory = null
+        router.push({
+            name: 'subCategories',
+            params: { catId: id }
+        })
     }
 
     const activateSubCategory = (id) => {
         categoriesData.activeSubCategory = id
+        router.push({
+            name: 'goods',
+            params: { subcatId: id }
+        })
     }
 
     const edit = obj => {
@@ -175,6 +179,8 @@
         categoriesData.isCategoriesEditModalOpen = false;
         store.clearName()
     }
+
+    const router = useRouter()
 </script>
 
 <style lang="scss">

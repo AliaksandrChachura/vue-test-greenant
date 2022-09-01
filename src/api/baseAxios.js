@@ -1,6 +1,5 @@
 import axios from 'axios'; 
 import qs from 'qs';
-import { notify } from "@kyvg/vue3-notification";
 
 const baseAxios = axios.create({
   // timeout: 60_000,
@@ -10,20 +9,18 @@ const baseAxios = axios.create({
 });
 
 baseAxios.interceptors.response.use(
-  response => response,
+  response => {
+    const isSuccessStatus = /^2/.test(response.status.toString())
+    if (isSuccessStatus && (response.config.method === 'post' || response.config.method === 'put')) {
+      alert("the value is put or post successfully") // по хорошему добавить стороннюю библиотеку (@kyvg/vue3-notification не сработал)
+    }
+    return response;
+  },
   error => {
-
     const message = (error.response
         && error.response.data
         && error.response.data.errorDescription)
       || error;
-
-    notify({
-      type: 'error',
-      title: 'Error',
-      text: message,
-      duration: 3000,
-    });
 
     return Promise.reject(error);
   },
