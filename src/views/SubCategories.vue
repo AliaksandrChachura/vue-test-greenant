@@ -37,7 +37,7 @@
         .active {
             color: #05A3AD;
             background: #F5F7FB;
-            border: 1px solid #05A3AD;
+            border: var(--active-border);
         }
     }
 </style>

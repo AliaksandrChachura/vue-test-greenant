@@ -33,22 +33,31 @@
             <category-header
                 :headerName="categoriesData.subCategoriesName"
             />
-            <router-view
-                :sub-categories="categoriesData.subCategories"
-                :active-sub-category="categoriesData.activeSubCategory"
-                @activate-sub-category="activateSubCategory"
-                @get-resources="getGoods"
-            />
+            <router-view v-slot="{ Component, route }" >
+                <keep-alive>
+                    <component
+                        v-if="route.name === 'subCategories' || route.name === 'goods'"
+                        :is=Component
+                        :sub-categories="categoriesData.subCategories"
+                        :active-sub-category="categoriesData.activeSubCategory"
+                        @activate-sub-category="activateSubCategory"
+                        @get-resources="getGoods"
+                    >
+                    </component>
+                </keep-alive>
+            </router-view>
         </div>
         <div class="categories__equipment">
             <category-header
                 :headerName="categoriesData.equipmentName"
             />
-            <div class="categories__equipment-cards">
-                <router-view
+            <router-view v-slot="{ Component, route }" >
+                <component
+                    v-if="route.name === 'goods'"
+                    :is="Component"
                     :goods="categoriesData.goods"
                 />
-            </div>
+            </router-view>
         </div>
     </div>
 </template>
@@ -57,6 +66,7 @@
     import { ref, onMounted, computed, reactive } from 'vue'
     import { useRouter, RouterView } from 'vue-router'
     import { useCategoriesStore } from '@/stores/categories'
+    import { notify } from "@kyvg/vue3-notification";
     import CategoryHeader from '@/components/CategoryHeader.vue'
     import CategoryItem from '@/components/CategoryItem.vue'
     import CategoryModal from '@/components/modal/CategoryModal.vue'
@@ -156,6 +166,10 @@
             store.clearName()
             categoriesData.categoryJSON = null
             categoriesData.activeCategory = null
+            notify({
+                title: "Success",
+                text: `The post ${config.title} was updated!`
+            });
         } catch(e) {
             console.log(e)
         }
@@ -168,10 +182,18 @@
             body: store.name,
             userId: 1
         }
-        apiCreatePost(config)
-        getCategories()
-        categoriesData.isCategoriesModalOpen = false;
-        store.clearName()
+        try {
+            apiCreatePost(config)
+            getCategories()
+            categoriesData.isCategoriesModalOpen = false;
+            store.clearName()
+            notify({
+                title: "Success",
+                text:` New post ${config.title} is created!`
+            }, 4000)
+        } catch(e) {
+                console.log(e)
+            }
     }
 
     const cancel = () => {
@@ -224,7 +246,7 @@
         .active {
             color: #05A3AD;
             background: #F5F7FB;
-            border: 1px solid #05A3AD;
+            border: var(--active-border)
         }
     }
 </style>

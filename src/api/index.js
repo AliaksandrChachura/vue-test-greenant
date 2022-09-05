@@ -3,7 +3,7 @@ import baseAxios from './baseAxios';
 async function apiGetPosts() {
     const res = await baseAxios({
       method: 'GET',
-      url: 'https://jsonplaceholder.typicode.com/posts',
+      url: '/posts',
     });
   
     return res.data || null;
@@ -12,7 +12,7 @@ async function apiGetPosts() {
 async function apiGetAlbums(userId) {
   const res = await baseAxios({
     method: 'GET',
-    url: `https://jsonplaceholder.typicode.com/users/${userId}/albums`,
+    url: `/users/${userId}/albums`,
   });
 
   return res.data || null;
@@ -21,7 +21,7 @@ async function apiGetAlbums(userId) {
 async function apiGetPhotos(albumId) {
   const res = await baseAxios({
     method: 'GET',
-    url: `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`,
+    url: `/photos?albumId=${albumId}`,
   });
 
   return res.data || null;
@@ -30,7 +30,7 @@ async function apiGetPhotos(albumId) {
 async function apiCreatePost(payload) {
   await baseAxios({
     method: 'POST',
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url: '/posts',
     data: payload,
   });
 }
@@ -38,7 +38,7 @@ async function apiCreatePost(payload) {
 async function apiUpdatePost(id, payload) {
   await baseAxios({
     method: 'PUT',
-    url: `https://jsonplaceholder.typicode.com/posts/${id}`,
+    url: `/posts/${id}`,
     data: payload,
   });
 }

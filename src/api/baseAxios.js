@@ -9,13 +9,7 @@ const baseAxios = axios.create({
 });
 
 baseAxios.interceptors.response.use(
-  response => {
-    const isSuccessStatus = /^2/.test(response.status.toString())
-    if (isSuccessStatus && (response.config.method === 'post' || response.config.method === 'put')) {
-      alert("the value is put or post successfully") // по хорошему добавить стороннюю библиотеку (@kyvg/vue3-notification не сработал)
-    }
-    return response;
-  },
+  response => response,
   error => {
     const message = (error.response
         && error.response.data
@@ -27,7 +21,7 @@ baseAxios.interceptors.response.use(
 );
 
 export default function baseClient(options) {
-  const { baseURL } = options;
+  const { baseURL = 'https://jsonplaceholder.typicode.com' } = options;
   return baseAxios({
     baseURL,
     ...options,

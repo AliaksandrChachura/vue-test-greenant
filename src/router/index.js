@@ -1,27 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { ROUTES } from '@/constants/modules/routes.js'
 
 const routes = [
   {
-    path: ROUTES.authentication.path,
-    name: ROUTES.authentication.name,
+    path: '/',
+    name: 'authentication',
     component: () => import('@/components/modal/AuthenticationModal.vue')
   },
   {
-    path: ROUTES.categories.path,
-    name: ROUTES.categories.name,
-    component: () => import(/* webpackChunkName: ROUTES.categories.name */ '@/views/Categories.vue'),
+    path: '/catalog',
+    name: 'categories',
+    component: () => import('@/views/Categories.vue'),
     children: [
       {
-        path: ROUTES.subCategories.path,
-        name: ROUTES.subCategories.name,
-        component: () => import(/* webpackChunkName: ROUTES.subCategories.name */ '@/views/SubCategories.vue'),
+        path: ':catId',
+        name: 'subCategories',
+        component: () => import('@/views/SubCategories.vue'),
       },
       {
-        path: ROUTES.goods.path,
-        name: ROUTES.goods.name,
-        component: () => import(/* webpackChunkName: ROUTES.goods.name */ '@/views/Equipments.vue')}
-    ]
+        path: ':catId/:subcatId',
+        name: 'goods',
+        component: () => import('@/views/Equipments.vue')
+      }
+  ]
   },
 ]
 

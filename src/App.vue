@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <router-view />
+    <notifications />
   </div>
 </template>
 
@@ -12,6 +13,6 @@
 <style lang="scss">
   .wrapper {
     height: 893px;
-    border: 2px solid #E9F2FF;;
+    border: var(--base-border);
   }
 </style>

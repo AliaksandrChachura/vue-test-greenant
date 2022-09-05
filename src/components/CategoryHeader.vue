@@ -37,10 +37,6 @@
             padding-left: 20px;
             padding-right: 114px;
             font-family: 'Poppins';
-            // font-style: normal;
-            // font-weight: 600;
-            // font-size: 22px;
-            // line-height: 33px;
         }
 
         img {
